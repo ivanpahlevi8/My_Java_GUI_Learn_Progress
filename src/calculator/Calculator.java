@@ -23,16 +23,24 @@ public class Calculator extends JFrame {
     private JButton substractButton = new JButton();
     private JButton divButton = new JButton();
     private JButton timesButton = new JButton();
+    private JButton resetButton = new JButton();
     private JButton dotButton = new JButton();
+    private JButton squaredButton = new JButton();
+    private JButton rootButton = new JButton();
     
     private boolean add = false;
     private boolean substract = false;
     private boolean div = false;
     private boolean times = false;
+    private boolean squared = false;
+    private boolean root = false;
+    
+    private double squaredResultNum1;
+    private double rootResult;
     
     public static void main(String[] args) {
         Calculator my_calculator = new Calculator("Calculator");
-        my_calculator.setSize(300, 300);
+        my_calculator.setSize(350, 350);
         my_calculator.setVisible(true);
         my_calculator.show();
     }
@@ -104,6 +112,12 @@ public class Calculator extends JFrame {
         gridConstraint.gridy = 5;
         my_panel.add(divButton, gridConstraint);
         
+        //dotButton
+        dotButton.setText(".");
+        gridConstraint.gridx = 3;
+        gridConstraint.gridy = 6;
+        my_panel.add(dotButton, gridConstraint);
+        
         // num_4
         num_4.setText("4");
         gridConstraint.gridx = 0;
@@ -149,20 +163,32 @@ public class Calculator extends JFrame {
         // result
         resultButton.setText("=");
         gridConstraint.gridx = 0;
-        gridConstraint.gridy = 5;
+        gridConstraint.gridy = 6;
         my_panel.add(resultButton, gridConstraint);
         
-        // dotButtom
-        dotButton.setText(".");
+        // resetButtom
+        resetButton.setText("C");
+        gridConstraint.gridx = 2;
+        gridConstraint.gridy = 6;
+        my_panel.add(resetButton, gridConstraint);
+        
+        // squaredButton
+        squaredButton.setText("^n");
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 5;
+        my_panel.add(squaredButton, gridConstraint);
+        
+        // rootButton
+        rootButton.setText("^0.5");
         gridConstraint.gridx = 2;
         gridConstraint.gridy = 5;
-        my_panel.add(dotButton, gridConstraint);
+        my_panel.add(rootButton, gridConstraint);
         
         // exit
         gridConstraint.insets = new Insets(22, 2, 2, 22);
         exitButton.setText("Exit");
         gridConstraint.gridx = 0;
-        gridConstraint.gridy = 6;
+        gridConstraint.gridy = 7;
         my_panel.add(exitButton, gridConstraint);
         
         addWindowListener(
@@ -318,6 +344,7 @@ public class Calculator extends JFrame {
                 }
         );
         
+        
         timesButton.addActionListener(
                 new ActionListener()
                 {
@@ -351,6 +378,17 @@ public class Calculator extends JFrame {
                 }
         );
         
+        resetButton.addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        resetButtonActionPerformed(e);
+                    }
+                }
+        );
+        
         dotButton.addActionListener(
                 new ActionListener()
                 {
@@ -358,6 +396,28 @@ public class Calculator extends JFrame {
                     public void actionPerformed(ActionEvent e)
                     {
                         dotButtonActionPerformed(e);
+                    }
+                }
+        );
+        
+        squaredButton.addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        squaredButtonActionPerformed(e);
+                    }
+                }
+        );
+        
+        rootButton.addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        rootButtonActionPerformed(e);
                     }
                 }
         );
@@ -414,6 +474,11 @@ public class Calculator extends JFrame {
         screenField.append("0");
     }
     
+    private void dotButtonActionPerformed(ActionEvent e)
+    {
+        screenField.append(".");
+    }
+    
     private void addButtonActionPerformed(ActionEvent e)
     {
         screenField.append("+");
@@ -438,13 +503,25 @@ public class Calculator extends JFrame {
         times = true;
     }
     
-    private void dotButtonActionPerformed(ActionEvent e)
+    private void resetButtonActionPerformed(ActionEvent e)
     {
         screenField.setText("");
         add = false;
         substract = false;
         div = false;
         times = false;
+    }
+    
+    public void squaredButtonActionPerformed(ActionEvent e)
+    {
+        screenField.append("^");
+        squared = true;
+    }
+    
+    public void rootButtonActionPerformed (ActionEvent e)
+    {
+        screenField.append("^0.5");
+        root = true;
     }
     
     private void resultButtonActionPerformed(ActionEvent e)
@@ -458,7 +535,7 @@ public class Calculator extends JFrame {
         for (int i = 0; i < len; i++)
         {
             trans = hasil.charAt(i);
-            if (Character.isDigit(trans))
+            if (Character.isDigit(trans) || trans == '.')
             {
                 angka1 = angka1 + trans;
                 k++;
@@ -472,7 +549,7 @@ public class Calculator extends JFrame {
         for (int i = k + 1 ; i < len; i++)
         {
             trans = hasil.charAt(i);
-            if (Character.isDigit(trans))
+            if (Character.isDigit(trans) || trans == '.')
             {
                 angka2 = angka2 + trans;
             }
@@ -484,15 +561,15 @@ public class Calculator extends JFrame {
         
         if (add)
         {
-            int hasilAngka1 = Integer.valueOf(angka1).intValue();
-            int hasilAngka2 = Integer.valueOf(angka2).intValue();
+            double hasilAngka1 = Double.valueOf(angka1).doubleValue();
+            double hasilAngka2 = Double.valueOf(angka2).doubleValue();
             String hasilAkhir = String.valueOf((hasilAngka1 + hasilAngka2));
             screenField.setText(hasilAkhir);
         }
         else if(substract)
         {
-            int hasilAngka1 = Integer.valueOf(angka1).intValue();
-            int hasilAngka2 = Integer.valueOf(angka2).intValue();
+            double hasilAngka1 = Double.valueOf(angka1).doubleValue();
+            double hasilAngka2 = Double.valueOf(angka2).doubleValue();
             String hasilAkhir = String.valueOf((hasilAngka1 - hasilAngka2));
             screenField.setText(hasilAkhir);
         }
@@ -500,14 +577,36 @@ public class Calculator extends JFrame {
         {
             double hasilAngka1 = Double.valueOf(angka1).doubleValue();
             double hasilAngka2 = Double.valueOf(angka2).doubleValue();
-            String hasilAkhir = String.valueOf((hasilAngka1 / hasilAngka2));
-            screenField.setText(hasilAkhir);
+            if (hasilAngka2 == 0.0)
+            {
+                screenField.setText("Math Error");
+                Toolkit.getDefaultToolkit().beep();
+            }
+            else
+            {
+                String hasilAkhir = String.valueOf((hasilAngka1 / hasilAngka2));
+                screenField.setText(hasilAkhir);
+            }
         }
         else if (times)
         {
             double hasilAngka1 = Double.valueOf(angka1).doubleValue();
             double hasilAngka2 = Double.valueOf(angka2).doubleValue();
             String hasilAkhir = String.valueOf((hasilAngka1 * hasilAngka2));
+            screenField.setText(hasilAkhir);
+        }
+        else if (squared)
+        {
+            double hasilAngka1 = Double.valueOf(angka1).doubleValue();
+            double hasilAngka2 = Double.valueOf(angka2).doubleValue();
+            String hasilAkhir = String.valueOf(Math.pow(hasilAngka1, hasilAngka2));
+            screenField.setText(hasilAkhir);
+        }
+        else if (true)
+        {
+            double hasilAngka1 = Double.valueOf(angka1).doubleValue();
+            double hasilAngka2 = Double.valueOf(angka2).doubleValue();
+            String hasilAkhir = String.valueOf(Math.pow(hasilAngka1, hasilAngka2));
             screenField.setText(hasilAkhir);
         }
     }
