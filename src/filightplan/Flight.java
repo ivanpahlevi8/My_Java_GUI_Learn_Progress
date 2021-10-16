@@ -39,6 +39,7 @@ public class Flight extends JFrame {
     
     private ButtonGroup seatButtonGroup = new ButtonGroup();
     private ButtonGroup flightNumberButtonGroup = new ButtonGroup();
+    private ButtonGroup classButtonGroup = new ButtonGroup();
     
     private JRadioButton economicRadioButton = new JRadioButton();
     private JRadioButton businessRadioButton = new JRadioButton();
@@ -56,13 +57,18 @@ public class Flight extends JFrame {
     private JLabel departureCityValue = new JLabel();
     private JLabel seatNumber = new JLabel();
     private JLabel seatNumberValue = new JLabel();
+    private JLabel seatPosition = new JLabel();
+    private JLabel seatPositionValue = new JLabel();
     private JLabel meal = new JLabel();
     private JLabel mealValue = new JLabel();
+    private JLabel flightLabel = new JLabel();
+    private JLabel flightLabelValue = new JLabel();
+    private JButton confirm = new JButton();
     
 
     public static void main(String[] args) {
         Flight my_flight = new Flight("Ivan Airlines"); 
-        my_flight.setSize(850, 450);
+        //my_flight.setSize(850, 450);
         my_flight.setVisible(true);
         
         my_flight.show();
@@ -488,7 +494,7 @@ public class Flight extends JFrame {
                     }
                 }
         );
-        flightNumberButtonGroup.add(economicRadioButton);
+        classButtonGroup.add(economicRadioButton);
         gridConstraint.gridx = 2;
         gridConstraint.gridy = 2;
         gridConstraint.insets = new Insets(10, 30, 0, 10);
@@ -507,18 +513,17 @@ public class Flight extends JFrame {
                     }
                 }
         );
-        flightNumberButtonGroup.add(businessRadioButton);
+        classButtonGroup.add(businessRadioButton);
         gridConstraint.gridx = 3;
         gridConstraint.gridy = 2;
         gridConstraint.insets = new Insets(10, 30, 0, 10);
         gridConstraint.anchor = GridBagConstraints.CENTER;
         my_panel.add(businessRadioButton, gridConstraint);
         
-        pack();
-        setLocationRelativeTo(null);
-        
         
         // Layer 2
+        // NODE LAYER 2
+        
         // ivanAirlinesLabel
         ivanAirlines.setText("IVAN AIRLINES");
         ivanAirlines.setFont(new Font("Arial", Font.BOLD, 30));
@@ -529,7 +534,7 @@ public class Flight extends JFrame {
         gridConstraint.gridx = 0;
         gridConstraint.gridy = 0;
         gridConstraint.gridwidth = 2;
-        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.insets = new Insets(0, 10, 80, 10);
         gridConstraint.anchor = GridBagConstraints.CENTER;
         my_panel.add(ivanAirlines, gridConstraint);
         
@@ -557,12 +562,199 @@ public class Flight extends JFrame {
         gridConstraint.gridx = 1;
         gridConstraint.gridy = 1;
         gridConstraint.gridwidth = 1;
-        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
         gridConstraint.anchor = GridBagConstraints.CENTER;
         my_panel.add(classSeatValue, gridConstraint);
         
-        //
+        //destination city
+        destinationCity.setText("Destination City");
+        destinationCity.setFont(new Font("Arial", Font.BOLD, 20));
+        destinationCity.setOpaque(true);
+        destinationCity.setBackground(new Color(240, 248, 254));
+        destinationCity.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 2;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(destinationCity, gridConstraint);
         
+        //destinationCityValue
+        destinationCityValue.setText(String.valueOf(citiesDirectList.getSelectedValue()));
+        destinationCityValue.setFont(new Font("Arial", Font.BOLD, 20));
+        destinationCityValue.setOpaque(true);
+        destinationCityValue.setBackground(new Color(0, 255, 254));
+        destinationCityValue.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 2;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(destinationCityValue, gridConstraint);
+       
+        // departureCity
+        departureCity.setText("Departure City");
+        departureCity.setFont(new Font("Arial", Font.BOLD, 20));
+        departureCity.setOpaque(true);
+        departureCity.setBackground(new Color(240, 248, 254));
+        departureCity.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 3;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(departureCity, gridConstraint);
+        
+        //departureCityValue
+        departureCityValue.setText(String.valueOf(citiesFromList.getSelectedValue()));
+        departureCityValue.setFont(new Font("Arial", Font.BOLD, 20));
+        departureCityValue.setOpaque(true);
+        departureCityValue.setBackground(new Color(0, 255, 254));
+        departureCityValue.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 3;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(departureCityValue, gridConstraint);
+        
+        // seatNumber
+        seatNumber.setText("Seat Number");
+        seatNumber.setFont(new Font("Arial", Font.BOLD, 20));
+        seatNumber.setOpaque(true);
+        seatNumber.setBackground(new Color(240, 248, 254));
+        seatNumber.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 4;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(seatNumber, gridConstraint);
+        
+        // seatNumberValue
+        seatNumberValue.setText(numSeat);
+        seatNumberValue.setFont(new Font("Arial", Font.BOLD, 20));
+        seatNumberValue.setOpaque(true);
+        seatNumberValue.setBackground(new Color(0, 255, 254));
+        seatNumberValue.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 4;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(seatNumberValue, gridConstraint);
+        
+        // seatPosition
+        seatPosition.setText("Seat Position");
+        seatPosition.setFont(new Font("Arial", Font.BOLD, 20));
+        seatPosition.setOpaque(true);
+        seatPosition.setBackground(new Color(240, 248, 254));
+        seatPosition.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 5;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(seatPosition, gridConstraint);
+        
+        //seatPositionValue
+        seatPositionValue.setText(String.valueOf(seatComboBox.getSelectedItem()));
+        seatPositionValue.setFont(new Font("Arial", Font.BOLD, 20));
+        seatPositionValue.setOpaque(true);
+        seatPositionValue.setBackground(new Color(0, 255, 254));
+        seatPositionValue.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 5;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(seatPositionValue, gridConstraint);
+        
+        // meal
+        meal.setText("Meal Menu");
+        meal.setFont(new Font("Arial", Font.BOLD, 20));
+        meal.setOpaque(true);
+        meal.setBackground(new Color(240, 248, 254));
+        meal.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 6;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(meal, gridConstraint);
+        
+        // mealValue
+        mealValue.setText(String.valueOf(mealComboBox.getSelectedItem()));
+        mealValue.setFont(new Font("Arial", Font.BOLD, 20));
+        mealValue.setOpaque(true);
+        mealValue.setBackground(new Color(0, 255, 254));
+        mealValue.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 6;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(mealValue, gridConstraint);
+        
+        //flightLabel
+        flightLabel.setText("Flight Number");
+        flightLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        flightLabel.setOpaque(true);
+        flightLabel.setBackground(new Color(240, 248, 254));
+        flightLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 0;
+        gridConstraint.gridy = 7;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 10, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(flightLabel, gridConstraint);
+        
+        //flightLabelValue
+        flightLabelValue.setText(flight);
+        flightLabelValue.setFont(new Font("Arial", Font.BOLD, 20));
+        flightLabelValue.setOpaque(true);
+        flightLabelValue.setBackground(new Color(0, 255, 254));
+        flightLabelValue.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint = new GridBagConstraints();
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 7;
+        gridConstraint.gridwidth = 1;
+        gridConstraint.insets = new Insets(10, 100, 10, 10);
+        gridConstraint.anchor = GridBagConstraints.CENTER;
+        my_panel.add(flightLabelValue, gridConstraint);
+        
+        // confirm button
+        confirm.setText("Confirm");
+        confirm.setFont(new Font("Arial", Font.BOLD, 14));
+        confirm.setOpaque(true);
+        confirm.setBackground(new Color(254, 240, 245));
+        confirm.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createRaisedBevelBorder()));
+        gridConstraint.gridx = 1;
+        gridConstraint.gridy = 8;
+        gridConstraint.insets = new Insets(30, 100, 0, 0);
+        gridConstraint.ipadx = 30;
+        gridConstraint.ipady = 10;
+        gridConstraint.anchor = GridBagConstraints.SOUTH;
+        my_panel.add(confirm, gridConstraint);
+        
+        
+        // NODE LAYER 2
+        
+        pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        my_panel.setBounds((int) (0.5 * (screenSize.width - getWidth())), (int) (0.5 * (screenSize.height - getHeight())), getWidth(), getHeight());
+        setLocationRelativeTo(null);
         
         // button listener
         exitButton.addActionListener(
@@ -583,6 +775,7 @@ public class Flight extends JFrame {
                     public void actionPerformed(ActionEvent e)
                     {
                         assignButtonActionPerformed(e);
+                        my_panel.setSize(300, 700);
                     }
                 }
         );
@@ -598,6 +791,17 @@ public class Flight extends JFrame {
                     }
         );
         
+        confirm.addActionListener(
+                new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        confirmButtonActionPeformed(e);
+                    }
+                }
+        );
+        
         addWindowListener(
                 new WindowAdapter()
                 {
@@ -607,6 +811,24 @@ public class Flight extends JFrame {
                     }
                 }
         );
+        
+        // initializing layer 2
+        ivanAirlines.setVisible(false);
+        classSeat.setVisible(false);
+        classSeatValue.setVisible(false);
+        destinationCity.setVisible(false);
+        destinationCityValue.setVisible(false);
+        departureCity.setVisible(false);
+        departureCityValue.setVisible(false);
+        seatNumber.setVisible(false);
+        seatNumberValue.setVisible(false);
+        seatPosition.setVisible(false);
+        seatPositionValue.setVisible(false);
+        meal.setVisible(false);
+        mealValue.setVisible(false);
+        confirm.setVisible(false);
+        flightLabel.setVisible(false);
+        flightLabelValue.setVisible(false);
     }
     
     public void exitForm(WindowEvent e)
@@ -630,6 +852,8 @@ public class Flight extends JFrame {
         else
         {
             offLayerOneAtribut();
+            seatNumberValue.setText(numSeat);
+            flightLabelValue.setText(flight);
         }
     }
     
@@ -657,6 +881,19 @@ public class Flight extends JFrame {
         System.exit(0);
     }
     
+    public void confirmButtonActionPeformed(ActionEvent e)
+    {
+        int action = JOptionPane.showConfirmDialog(null, "Want Make Another Reservation ? ", "WARN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (action == JOptionPane.YES_OPTION)
+        {
+            onLayerOneAtribute();
+        }
+        else
+        {
+            System.exit(0);
+        }
+    }
+    
     public void offLayerOneAtribut()
     {
         citiesDirectLabel.setVisible(false);
@@ -675,6 +912,24 @@ public class Flight extends JFrame {
         businessRadioButton.setVisible(false);
         seatComboBox.setVisible(false);
         mealComboBox.setVisible(false);
+        
+        // layer 2
+        ivanAirlines.setVisible(true);
+        classSeat.setVisible(true);
+        classSeatValue.setVisible(true);
+        destinationCity.setVisible(true);
+        destinationCityValue.setVisible(true);
+        departureCity.setVisible(true);
+        departureCityValue.setVisible(true);
+        seatNumber.setVisible(true);
+        seatNumberValue.setVisible(true);
+        seatPosition.setVisible(true);
+        seatPositionValue.setVisible(true);
+        meal.setVisible(true);
+        mealValue.setVisible(true);
+        confirm.setVisible(true);
+        flightLabel.setVisible(true);
+        flightLabelValue.setVisible(true);
     }
     
     public void onLayerOneAtribute()
@@ -695,10 +950,25 @@ public class Flight extends JFrame {
         businessRadioButton.setVisible(true);
         seatComboBox.setVisible(true);
         mealComboBox.setVisible(true);
+        
+        // layer 2
+        ivanAirlines.setVisible(false);
+        classSeat.setVisible(false);
+        classSeatValue.setVisible(false);
+        destinationCity.setVisible(false);
+        destinationCityValue.setVisible(false);
+        departureCity.setVisible(false);
+        departureCityValue.setVisible(false);
+        seatNumber.setVisible(false);
+        seatNumberValue.setVisible(false);
+        seatPosition.setVisible(false);
+        seatPositionValue.setVisible(false);
+        meal.setVisible(false);
+        mealValue.setVisible(false);
+        confirm.setVisible(false);
+        seatComboBox.setVisible(false);
+        mealComboBox.setVisible(false);
     }
     
-    public void onLayerTwoAttribute()
-    {
-        
-    }
+    
 }
