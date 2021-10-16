@@ -51,6 +51,10 @@ public class Calculator extends JFrame {
         JPanel my_panel = (JPanel) this.getContentPane();
         my_panel.setBackground(Color.DARK_GRAY);
         
+        setLocationRelativeTo(null);
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        
         my_panel.setLayout(new GridBagLayout());
         GridBagConstraints gridConstraint = new GridBagConstraints();
         gridConstraint.insets = new Insets(2, 2, 2, 22);
@@ -62,6 +66,7 @@ public class Calculator extends JFrame {
         gridConstraint.gridwidth = 4;
         gridConstraint.gridx = 0;
         gridConstraint.gridy = 0;
+        gridConstraint.fill = GridBagConstraints.HORIZONTAL;
         my_panel.add(screenField, gridConstraint);
         
         
@@ -190,6 +195,9 @@ public class Calculator extends JFrame {
         gridConstraint.gridx = 0;
         gridConstraint.gridy = 7;
         my_panel.add(exitButton, gridConstraint);
+        
+        pack();
+        setLocationRelativeTo(null);
         
         addWindowListener(
                 new WindowAdapter()
@@ -526,7 +534,7 @@ public class Calculator extends JFrame {
     
     private void resultButtonActionPerformed(ActionEvent e)
     {
-        String hasil = screenField.getText();
+        String hasil = screenField.getText().trim();
         String angka1 = "";
         String angka2 = "";
         int len = hasil.length();
